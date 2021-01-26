@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameOverScreenController : MonoBehaviour
+public class PlayerInputController : MonoBehaviour
 {
     // Start is called before the first frame update
     void Start()
