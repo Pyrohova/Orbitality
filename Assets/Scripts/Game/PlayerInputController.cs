@@ -11,8 +11,14 @@ public class PlayerInputController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        
+        Vector2 shotDirection = Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
+
+        //Shoot Requested
+        if (Input.GetMouseButtonDown(0))
+        {
+            //shoot;
+        }
     }
 }
