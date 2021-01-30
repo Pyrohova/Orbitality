@@ -137,4 +137,6 @@ MonoBehaviour:
   damage: 15
   weight: 0.5
   maxLifetime: 15
+  cooldown: 20
+  type: 2
   rb: {fileID: 1509477384868667620}

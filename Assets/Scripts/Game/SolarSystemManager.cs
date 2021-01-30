@@ -16,6 +16,7 @@ public class SolarSystemManager : MonoBehaviour
 
     public void GenerateWorld()
     {
+        Debug.Log("called");
         var allPlanets = planetFactory.GeneratePlanets();
         PlayerPlanet = allPlanets.Item1;
         EnemyPlanets = allPlanets.Item2;

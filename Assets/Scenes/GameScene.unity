@@ -331,8 +331,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 225410d81ebb64769a901fd4ebc0a013, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  solarSystemManager: {fileID: 0}
-  rocketPool: {fileID: 0}
+  solarSystemManager: {fileID: 2070358736}
+  rocketPool: {fileID: 820169141}
 --- !u!4 &638660275
 Transform:
   m_ObjectHideFlags: 0
@@ -1984,7 +1984,7 @@ PrefabInstance:
     - target: {fileID: 8436796117122048074, guid: 9bce1b89efa5d4cd8a584ae790afc0e9,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.6223145
+      value: 1.6223297
       objectReference: {fileID: 0}
     - target: {fileID: 8436796117122048183, guid: 9bce1b89efa5d4cd8a584ae790afc0e9,
         type: 3}

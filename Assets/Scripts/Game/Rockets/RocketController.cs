@@ -6,7 +6,7 @@ public class RocketController : MonoBehaviour, IHittable
 {
     [SerializeField] private float speed;
     [SerializeField] private float damage;
-    [SerializeField] private float weight = 1;
+    [SerializeField] private float weight;
     [SerializeField] private float maxLifetime;
 
     [SerializeField] private float cooldown;
