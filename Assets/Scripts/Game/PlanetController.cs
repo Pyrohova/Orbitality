@@ -8,7 +8,7 @@ public class PlanetController : MonoBehaviour, IHittable
     [Header("Visual")]
     [SerializeField] private Color readyToShootSignColor;
     [SerializeField] private Color shotCooldownSignColor;
-    private SpriteRenderer image;
+    [SerializeField] private SpriteRenderer image;
 
     [Header("Functional")]
     private float speed;
@@ -40,6 +40,7 @@ public class PlanetController : MonoBehaviour, IHittable
         sunPosition = values.sunPosition;
         angleCoefficient = speed * 360 / values.distanceToSun.x;
         transform.localScale = new Vector2(values.scale, values.scale);
+        Debug.Log(values.image.name);
         image.sprite = values.image;
 
 }
@@ -74,7 +75,6 @@ public class PlanetController : MonoBehaviour, IHittable
         currentHP = maxHP;
         hpSlider.value = 1;
         state = PlanetState.ReadyToAttack;
-        image = GetComponent<SpriteRenderer>();
         image.color = readyToShootSignColor;
     }
 

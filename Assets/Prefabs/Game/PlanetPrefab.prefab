@@ -409,6 +409,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   readyToShootSignColor: {r: 1, g: 0, b: 0, a: 0}
   shotCooldownSignColor: {r: 1, g: 1, b: 1, a: 0}
+  image: {fileID: 523629417241505951}
   hpSlider: {fileID: 523629416375983180}
 --- !u!58 &1185018736297826457
 CircleCollider2D:

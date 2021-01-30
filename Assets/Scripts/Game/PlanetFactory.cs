@@ -7,7 +7,7 @@ public class PlanetFactory : MonoBehaviour
 {
     [SerializeField] private Sprite[] planetSprites;
     [SerializeField] private float[] sizes = {0.12f, 0.13f, 0.15f, 0.14f, 0.11f };
-    [SerializeField] private float[] distanceToSun = {2f, 3.45f, 5f, 6.7f, 8.2f };
+    [SerializeField] private float[] distanceToSun = {2f, 3.4f, 5f, 6.7f, 8.2f };
     [SerializeField] private float[] planetRotationSpeeds = { 5f, 2f, 4.3f, 7f, 6f  };
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private GameObject planetParent;
@@ -39,6 +39,8 @@ public class PlanetFactory : MonoBehaviour
         for (int i = 0; i < quantity; i++)
         {
             GameObject newPlanet = Instantiate(planetPrefab);
+            newPlanet.transform.SetParent(planetParent.transform);
+
             PlanetInitializationValues startValues = new PlanetInitializationValues();
             startValues.image = GenerateRandomSprite();
             startValues.scale = sizes[i];
@@ -58,15 +60,16 @@ public class PlanetFactory : MonoBehaviour
     // to prevent copies
     private Sprite GenerateRandomSprite()
     {
-        int rand = 0;
-        do
-        {
-            rand = UnityEngine.Random.Range(0, planetSprites.Length);
-        }
-        while (!planetWithSuchSpriteExists[rand]);
+        //int rand = 0;
+        //do
+        //{
+        //    rand = UnityEngine.Random.Range(0, planetSprites.Length);
+        //}
+        //while (!planetWithSuchSpriteExists[rand]);
 
-        planetWithSuchSpriteExists[rand] = true;
-        return planetSprites[rand];
+        //planetWithSuchSpriteExists[rand] = true;
+        //return planetSprites[rand];
+        return planetSprites[0];
     }
 
     public void Reset()
@@ -77,7 +80,8 @@ public class PlanetFactory : MonoBehaviour
     private void Awake()
     {
         Reset();
+        
         rocketPool = ServiceLocator.GetInstance().GetRocketPool();
-        sun = ServiceLocator.GetInstance().GetSolarSystemManager().Sun;
+        sun = ServiceLocator.GetInstance().GetSolarSystemManager().GetSun();
     }
 }

@@ -1559,13 +1559,18 @@ MonoBehaviour:
   - 0.15
   - 0.14
   - 0.11
-  distanceToSun: []
-  planetRotationSpeeds:
-  - 5
+  distanceToSun:
   - 2
-  - 4.3
-  - 7
-  - 6
+  - 3.4
+  - 5
+  - 6.7
+  - 8.2
+  planetRotationSpeeds:
+  - 1
+  - 1.25
+  - 0.75
+  - 1.5
+  - 1
   planetPrefab: {fileID: 523629417241505944, guid: 0dccc2451ebad4112986b97e9b4a92c6,
     type: 3}
   planetParent: {fileID: 1292777668}
@@ -1582,6 +1587,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   planetFactory: {fileID: 2070358735}
+  sun: {fileID: 978042949}
 --- !u!1001 &523629417697739082
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1642,7 +1648,7 @@ PrefabInstance:
     - target: {fileID: 523629417241505945, guid: 0dccc2451ebad4112986b97e9b4a92c6,
         type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 523629417241505945, guid: 0dccc2451ebad4112986b97e9b4a92c6,
         type: 3}

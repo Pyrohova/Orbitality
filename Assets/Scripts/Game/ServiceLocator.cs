@@ -2,26 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ServiceLocator : MonoBehaviour
+public class ServiceLocator : Singleton<ServiceLocator>
 {
     [SerializeField] private SolarSystemManager solarSystemManager;
     [SerializeField] private RocketPool rocketPool;
-
-    private static ServiceLocator Instance;
-
-    private void Awake()
-    {
-        if (Instance == null)
-        {
-            Instance = this;
-            //DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
-    }
 
     public static ServiceLocator GetInstance()
     {

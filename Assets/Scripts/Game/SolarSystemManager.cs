@@ -7,16 +7,21 @@ public class SolarSystemManager : MonoBehaviour
 {
     [SerializeField] private PlanetFactory planetFactory;
 
-    [SerializeField] public List<GameObject> EnemyPlanets { get; private set; }
-    [SerializeField] public GameObject PlayerPlanet { get; private set; }
-    [SerializeField] public GameObject Sun { get; private set; }
+    public List<GameObject> EnemyPlanets { get; private set; }
+    public GameObject PlayerPlanet { get; private set; }
+
+    [SerializeField] private GameObject sun;
 
     public Action<GameResult> OnPlayerDestroyed;
     public Action<GameResult> OnAllEnemiesDestroyed;
 
+    public GameObject GetSun()
+    {
+        return sun;
+    }
+
     public void GenerateWorld()
     {
-        Debug.Log("called");
         var allPlanets = planetFactory.GeneratePlanets();
         PlayerPlanet = allPlanets.Item1;
         EnemyPlanets = allPlanets.Item2;
