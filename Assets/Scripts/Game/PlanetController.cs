@@ -6,26 +6,43 @@ using UnityEngine.UI;
 public class PlanetController : MonoBehaviour, IHittable
 {
     [Header("Visual")]
-    public Sprite image;
-    public float scale;
-    public Color readyToShootSignColor;
-    public Color shotCooldownSignColor;
+    [SerializeField] private Color readyToShootSignColor;
+    [SerializeField] private Color shotCooldownSignColor;
+    private SpriteRenderer image;
 
     [Header("Functional")]
-    public float speed;
-    public float distanceToSun;
+    private float speed;
+    private float angleCoefficient;
+    private Vector3 sunPosition;
 
-    public float currentHP;
-    public float maxHP;
-    public Slider hpSlider;
+    private float currentHP;
+    private float maxHP;
+    [SerializeField] private Slider hpSlider;
 
-    public float reloadingTome;
-    public CooldownController cooldownController;
-    public PlanetState state;
+    private float reloadingTime;
+    private RocketType rocketType;
 
-    public IPlanetBehaviour planetBehaviour;
+    private PlanetState state;
 
+    private IPlanetBehaviour planetBehaviour;
+    private IPlanetAttack planetAttack;
 
+    public void Initialize(PlanetInitializationValues values)
+    {
+        speed = values.speed;
+        maxHP = values.maxHP;
+        reloadingTime = values.reloadingTime;
+        rocketType = values.rocketType;
+        planetBehaviour = values.planetBehaviour;
+        planetAttack = values.planetAttack;
+
+        transform.position = values.distanceToSun;
+        sunPosition = values.sunPosition;
+        angleCoefficient = speed * 360 / values.distanceToSun.x;
+        transform.localScale = new Vector2(values.scale, values.scale);
+        image.sprite = values.image;
+
+}
 
     public void AcceptDamage(float damage)
     {
@@ -39,15 +56,30 @@ public class PlanetController : MonoBehaviour, IHittable
         hpSlider.value = newValue;
     }
 
+    private void Move()
+    {
+        float angle = angleCoefficient * Time.deltaTime;
+
+        Vector3 deltaPos = transform.position - sunPosition;
+        transform.position = Quaternion.AngleAxis(angle, Vector3.forward) * deltaPos;
+    }
+
     private void Die()
     {
-        // and remove it from solar manager
-        Destroy(gameObject);
+        ServiceLocator.GetInstance().GetSolarSystemManager().DestroyPlanet(gameObject);
     }
 
     private void Awake()
     {
         currentHP = maxHP;
         hpSlider.value = 1;
+        state = PlanetState.ReadyToAttack;
+        image = GetComponent<SpriteRenderer>();
+        image.color = readyToShootSignColor;
+    }
+
+    private void FixedUpdate()
+    {
+        Move();
     }
 }

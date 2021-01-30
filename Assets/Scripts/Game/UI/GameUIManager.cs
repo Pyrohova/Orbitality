@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameUIManager : Singleton<GameUIManager>
+public class GameUIManager : MonoBehaviour
 {
     [Header("In Game Screen")]
     [SerializeField] private GameObject inGameScreen;
@@ -61,23 +61,38 @@ public class GameUIManager : Singleton<GameUIManager>
                 break;
         }
     }
-    protected override void InitializeManager()
+
+    private void Awake()
     {
+        var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
+
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
 
+        solarSystemManager.OnAllEnemiesDestroyed += (result) => { ShowGameOverScreen(result); };
+        solarSystemManager.OnPlayerDestroyed += (result) => { ShowGameOverScreen(result); };
+
         pauseButton.onClick.AddListener(() => {
+            ShowPauseScreen();
+            GameStateController.Pause();
         });
 
         mainMenuButton.onClick.AddListener(() => {
+            SceneManager.LoadMainMenuScene();
+            GameStateController.Finish();
+            solarSystemManager.ResetWorld();
         });
 
         continueButton.onClick.AddListener(() => {
+            ShowInGameScreen();
+            GameStateController.Resume();
         });
 
         mainMenuButtonPauseScreen.onClick.AddListener(() => {
             SceneManager.LoadMainMenuScene();
+            GameStateController.Finish();
+            solarSystemManager.ResetWorld();
         });
 
     }
