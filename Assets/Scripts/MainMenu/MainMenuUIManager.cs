@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class MainMenuUIManager : MonoBehaviour
 {
+    [Header("Main Menu Screen")]
     [SerializeField] private GameObject mainMenuScreen;
 
     [SerializeField] private Button newGameButton;

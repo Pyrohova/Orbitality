@@ -62,5 +62,6 @@ public class SolarSystemManager : MonoBehaviour
     public void Start()
     {
         GenerateWorld();
+        GameStateController.Start();
     }
 }

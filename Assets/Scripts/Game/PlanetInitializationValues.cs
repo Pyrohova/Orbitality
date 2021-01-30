@@ -17,7 +17,6 @@ public class PlanetInitializationValues
     public RocketType rocketType;
 
     public float reloadingTime;
-    public CooldownController cooldownController;
     public PlanetState state;
 
     public IPlanetBehaviour planetBehaviour;

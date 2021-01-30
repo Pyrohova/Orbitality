@@ -33,7 +33,7 @@ public class PlanetFactory : MonoBehaviour
     {
         int quantity = UnityEngine.Random.Range(MIN_PLANETS_QUANTITY, MAX_PLANETS_QUANTITY);
 
-        var distributedRockets = rocketPool.DistributeRocketsForPlanets(quantity);
+        //var distributedRockets = rocketPool.DistributeRocketsForPlanets(quantity);
         List<GameObject> planets = new List<GameObject>();
 
         for (int i = 0; i < quantity; i++)
@@ -45,8 +45,8 @@ public class PlanetFactory : MonoBehaviour
             startValues.speed = planetRotationSpeeds[i];
             startValues.sunPosition = sun.transform.position;
             startValues.distanceToSun = new Vector2(sun.transform.position.x + distanceToSun[i], sun.transform.position.y);
-            startValues.rocketType = distributedRockets[i].Item1;
-            startValues.reloadingTime = distributedRockets[i].Item2;
+            //startValues.rocketType = distributedRockets[i].Item1;
+            //startValues.reloadingTime = distributedRockets[i].Item2;
 
             PlanetController planetController = newPlanet.GetComponent<PlanetController>();
             planetController.Initialize(startValues);

@@ -8,6 +8,7 @@ public class RocketController : MonoBehaviour, IHittable
     [SerializeField] private float damage;
     [SerializeField] private float weight;
     [SerializeField] private float maxLifetime;
+    [SerializeField] private float gravityCoefficient;
 
     [SerializeField] private float cooldown;
     [SerializeField] private RocketType type;
@@ -17,6 +18,7 @@ public class RocketController : MonoBehaviour, IHittable
     public bool IsEnabled { get; private set; } = false;
 
     private float currentLifetime;
+    private float localRotation;
 
     public RocketType GetRocketType()
     {
@@ -56,7 +58,30 @@ public class RocketController : MonoBehaviour, IHittable
 
     private void Move()
     {
-        
+        Vector3 curDir = transform.position.normalized;
+
+        float angle = Vector3.SignedAngle(curDir, rb.velocity, transform.forward);
+        transform.RotateAround(transform.position, transform.forward, angle);
+        rb.AddForce(curDir * speed);
+
+        CalculateGravity();
+
+        localRotation += Time.deltaTime * 360;
+        transform.localRotation = Quaternion.Euler(new Vector2(0, localRotation));
+    }
+
+    private void CalculateGravity()
+    {
+        List<GameObject> planets = new List<GameObject>();
+        planets.AddRange(GameObject.FindGameObjectsWithTag("Planet"));
+        planets.Add(GameObject.FindGameObjectWithTag("Sun"));
+
+        foreach (GameObject planet in planets)
+        {
+            Vector3 forceDirection = planet.transform.position - transform.position;
+            if (forceDirection.magnitude < 1) continue;
+            rb.AddForce(forceDirection.normalized * gravityCoefficient * rb.mass * forceDirection.magnitude / gravityCoefficient);
+        }
     }
 
     private void FixedUpdate()

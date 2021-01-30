@@ -62,7 +62,7 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
-    private void Awake()
+    private void Start()
     {
         var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
 
