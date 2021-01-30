@@ -6,11 +6,11 @@ public class RocketController : MonoBehaviour, IHittable
 {
     [SerializeField] private float speed;
     [SerializeField] private float damage;
-    [SerializeField] private float weight;
+    [SerializeField] private float weight = 1;
     [SerializeField] private float maxLifetime;
 
-    [SerializeField] public float Cooldown { get; private set; }
-    [SerializeField] public RocketType Type { get; private set; }
+    [SerializeField] private float cooldown;
+    [SerializeField] private RocketType type;
 
     [SerializeField] private Rigidbody2D rb;
 
@@ -18,6 +18,15 @@ public class RocketController : MonoBehaviour, IHittable
 
     private float currentLifetime;
 
+    public RocketType GetRocketType()
+    {
+        return type;
+    }
+
+    public float GetCooldown()
+    {
+        return cooldown;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -69,5 +78,6 @@ public class RocketController : MonoBehaviour, IHittable
     private void Awake()
     {
         Disable();
+        rb.mass = weight;
     }
 }
