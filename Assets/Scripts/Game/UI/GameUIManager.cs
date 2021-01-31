@@ -32,7 +32,9 @@ public class GameUIManager : MonoBehaviour
     private void HidePreviousScreenAndShowNew(GameObject newScreen)
     {
         if (currentScreen != null)
+        {
             currentScreen.SetActive(false);
+        }
         currentScreen = newScreen;
         currentScreen.SetActive(true);
     }
@@ -94,6 +96,8 @@ public class GameUIManager : MonoBehaviour
             GameStateController.Finish();
             solarSystemManager.ResetWorld();
         });
+
+        ShowInGameScreen();
 
     }
 }

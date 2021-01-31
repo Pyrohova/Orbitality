@@ -20,5 +20,4 @@ public class PlanetInitializationValues
     public PlanetState state;
 
     public IPlanetBehaviour planetBehaviour;
-    public IPlanetAttack planetAttack;
 }

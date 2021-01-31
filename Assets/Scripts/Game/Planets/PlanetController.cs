@@ -5,19 +5,17 @@ using UnityEngine.UI;
 
 public class PlanetController : MonoBehaviour, IHittable
 {
-    [Header("Visual")]
-    [SerializeField] private Color readyToShootSignColor;
-    [SerializeField] private Color shotCooldownSignColor;
-    [SerializeField] private SpriteRenderer image;
+    [SerializeField] private Slider hpSlider;
 
-    [Header("Functional")]
+    [SerializeField] private SpriteRenderer planetImage;
+    [SerializeField] private Image readyToShootImage;
+
     private float speed;
     private float angleCoefficient;
     private Vector3 sunPosition;
 
     private float currentHP;
     private float maxHP;
-    [SerializeField] private Slider hpSlider;
 
     private float reloadingTime;
     private RocketType rocketType;
@@ -25,7 +23,6 @@ public class PlanetController : MonoBehaviour, IHittable
     private PlanetState state;
 
     private IPlanetBehaviour planetBehaviour;
-    private IPlanetAttack planetAttack;
 
     public void Initialize(PlanetInitializationValues values)
     {
@@ -34,14 +31,13 @@ public class PlanetController : MonoBehaviour, IHittable
         reloadingTime = values.reloadingTime;
         rocketType = values.rocketType;
         planetBehaviour = values.planetBehaviour;
-        planetAttack = values.planetAttack;
+ 
 
         transform.position = values.distanceToSun;
         sunPosition = values.sunPosition;
         angleCoefficient = speed * 360 / values.distanceToSun.x;
         transform.localScale = new Vector2(values.scale, values.scale);
-        Debug.Log(values.image.name);
-        image.sprite = values.image;
+        planetImage.sprite = values.image;
 
 }
 
@@ -75,7 +71,7 @@ public class PlanetController : MonoBehaviour, IHittable
         currentHP = maxHP;
         hpSlider.value = 1;
         state = PlanetState.ReadyToAttack;
-        image.color = readyToShootSignColor;
+        readyToShootImage.gameObject.SetActive(true);
     }
 
     private void FixedUpdate()

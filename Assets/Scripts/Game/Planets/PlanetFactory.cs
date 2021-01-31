@@ -9,6 +9,7 @@ public class PlanetFactory : MonoBehaviour
     [SerializeField] private float[] sizes = {0.12f, 0.13f, 0.15f, 0.14f, 0.11f };
     [SerializeField] private float[] distanceToSun = {2f, 3.4f, 5f, 6.7f, 8.2f };
     [SerializeField] private float[] planetRotationSpeeds = { 5f, 2f, 4.3f, 7f, 6f  };
+    [SerializeField] private float maxPlanetHP = 100;
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private GameObject planetParent;
 
@@ -24,8 +25,10 @@ public class PlanetFactory : MonoBehaviour
 
     public Tuple<GameObject, List<GameObject>> GeneratePlanets()
     {
-        GameObject planet = null;
         List<GameObject> enemies = GenerateNewPlanetsWithStartValues();
+        int selectedPlanetIndex = UnityEngine.Random.Range(0, enemies.Count);
+        GameObject planet = enemies[selectedPlanetIndex];
+        enemies.RemoveAt(selectedPlanetIndex);
         return Tuple.Create(planet, enemies);
     }
 
@@ -47,6 +50,7 @@ public class PlanetFactory : MonoBehaviour
             startValues.speed = planetRotationSpeeds[i];
             startValues.sunPosition = sun.transform.position;
             startValues.distanceToSun = new Vector2(sun.transform.position.x + distanceToSun[i], sun.transform.position.y);
+            startValues.maxHP = maxPlanetHP;
             //startValues.rocketType = distributedRockets[i].Item1;
             //startValues.reloadingTime = distributedRockets[i].Item2;
 
@@ -60,16 +64,15 @@ public class PlanetFactory : MonoBehaviour
     // to prevent copies
     private Sprite GenerateRandomSprite()
     {
-        //int rand = 0;
-        //do
-        //{
-        //    rand = UnityEngine.Random.Range(0, planetSprites.Length);
-        //}
-        //while (!planetWithSuchSpriteExists[rand]);
+        int rand = 0;
+        do
+        {
+            rand = UnityEngine.Random.Range(0, planetSprites.Length);
+        }
+        while (planetWithSuchSpriteExists[rand]);
 
-        //planetWithSuchSpriteExists[rand] = true;
-        //return planetSprites[rand];
-        return planetSprites[0];
+        planetWithSuchSpriteExists[rand] = true;
+        return planetSprites[rand];
     }
 
     public void Reset()
