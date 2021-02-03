@@ -93,7 +93,7 @@ public class GameUIManager : MonoBehaviour
 
         var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
         var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
-        var rocketPool = ServiceLocator.GetInstance().GetRocketPool();
+        var rocketPool = ServiceLocator.GetInstance().GetRocketManager();
 
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);

@@ -19,7 +19,6 @@ public class PlanetController : MonoBehaviour, IHittable
     private float maxHP;
 
     private float reloadingTime;
-    private PlanetType planetType;
 
     public Action<float> OnHealthChanged;
     public Action<float> OnCooldownStarted;
@@ -35,6 +34,8 @@ public class PlanetController : MonoBehaviour, IHittable
     {
         speed = values.speed;
         maxHP = values.maxHP;
+        currentHP = maxHP;
+
         reloadingTime = values.reloadingTime;
 
         transform.position = values.distanceToSun;
@@ -42,16 +43,6 @@ public class PlanetController : MonoBehaviour, IHittable
         angleCoefficient = speed * 360 / values.distanceToSun.x;
         transform.localScale = new Vector2(values.scale, values.scale);
         planetImage.sprite = values.image;
-        planetType = values.planetType;
-
-        if (planetType == PlanetType.Player)
-        {
-            gameObject.AddComponent<PlayerPlanetAttack>();
-        }
-        else
-        {
-            gameObject.AddComponent<EnemyPlanetAttack>();
-        }
 
         attackTactik = GetComponent<IAttackTactik>();
         attackTactik.Initialize(values.rocketType, values.reloadingTime, readyToShootImage);
@@ -60,16 +51,20 @@ public class PlanetController : MonoBehaviour, IHittable
 
     public void AcceptDamage(float damage)
     {
-        if (damage >= currentHP)
-        {
-            Die();
-        }
         currentHP -= damage;
 
-        float newValue = currentHP / maxHP;
-        hpSlider.value = newValue;
+        if (currentHP <= 0)
+        {
+            Die();
 
-        OnHealthChanged?.Invoke(newValue);
+        }
+        else
+        {
+            float newValue = currentHP / maxHP;
+            hpSlider.value = newValue;
+
+            OnHealthChanged?.Invoke(newValue);
+        }
     }
 
     private void Move()
@@ -87,7 +82,6 @@ public class PlanetController : MonoBehaviour, IHittable
 
     private void Awake()
     {
-        currentHP = maxHP;
         hpSlider.value = 1;
         readyToShootImage.SetActive(true);
     }

@@ -7,10 +7,12 @@ public class PlanetFactory : MonoBehaviour
 {
     [SerializeField] private Sprite[] planetSprites;
 
-    [SerializeField] private float[] sizes = {0.12f, 0.13f, 0.15f, 0.14f, 0.11f };
-    [SerializeField] private float[] distanceToSun = {2f, 3.4f, 5f, 6.7f, 8.2f };
-    [SerializeField] private float[] planetRotationSpeeds = { 5f, 2f, 4.3f, 7f, 6f  };
-    [SerializeField] private float maxPlanetHP = 100;
+    [SerializeField] private float[] sizeRange = {0.11f, 0.15f};
+    [SerializeField] private float distanceToSun = 2f;
+    [SerializeField] private  float distanceBetweeenPlanets = 1.5f;
+
+    [SerializeField] private float[] planetRotationSpeedsRange = { 0.25f, 0.75f  };
+    [SerializeField] private float[] maxPlanetHPRange = { 50, 100 };
 
     [SerializeField] private GameObject planetPrefab;
     [SerializeField] private GameObject planetParent;
@@ -19,42 +21,50 @@ public class PlanetFactory : MonoBehaviour
 
     private bool[] planetWithSuchSpriteExists;
 
-    private const int MAX_PLANETS_QUANTITY = 5;
-    private const int MIN_PLANETS_QUANTITY = 2;
-
-    private RocketPool rocketPool;
+    private RocketManager rocketManager;
 
 
-    public Tuple<List<GameObject>, GameObject> GenerateNewPlanets()
+    public GameObject CreatePlayerPlanet(int planetIndex)
     {
-        int quantity = UnityEngine.Random.Range(MIN_PLANETS_QUANTITY, MAX_PLANETS_QUANTITY);
-        int selectedPlayerPlanetIndex = UnityEngine.Random.Range(0, quantity-1);
+        return CreatePlanet(PlanetType.Player, planetIndex);
+    }
 
-        var distributedRockets = rocketPool.DistributeRocketsForPlanets(quantity);
-        List<GameObject> planets = new List<GameObject>();
+    public GameObject CreateEnemyPlanet(int planetIndex)
+    {
+        return CreatePlanet(PlanetType.Enemy, planetIndex);
+    }
 
-        for (int i = 0; i < quantity; i++)
+    private GameObject CreatePlanet(PlanetType type, int planetIndex)
+    {
+        GameObject newPlanet = Instantiate(planetPrefab);
+        newPlanet.transform.SetParent(planetParent.transform);
+
+        PlanetInitializationValues startValues = new PlanetInitializationValues();
+        startValues.image = GenerateRandomSprite();
+        startValues.scale = UnityEngine.Random.Range(sizeRange[0], sizeRange[1]);
+        startValues.speed = UnityEngine.Random.Range(planetRotationSpeedsRange[0], planetRotationSpeedsRange[1]);
+        startValues.sunPosition = sun.transform.position;
+        startValues.distanceToSun = new Vector2(sun.transform.position.x + distanceToSun + distanceBetweeenPlanets * planetIndex, sun.transform.position.y);
+        startValues.maxHP = UnityEngine.Random.Range(maxPlanetHPRange[0], maxPlanetHPRange[1]);
+
+        startValues.planetType = type;
+        if (type == PlanetType.Player)
         {
-            GameObject newPlanet = Instantiate(planetPrefab);
-            newPlanet.transform.SetParent(planetParent.transform);
-
-            PlanetInitializationValues startValues = new PlanetInitializationValues();
-            startValues.image = GenerateRandomSprite();
-            startValues.scale = sizes[i];
-            startValues.speed = planetRotationSpeeds[i];
-            startValues.sunPosition = sun.transform.position;
-            startValues.distanceToSun = new Vector2(sun.transform.position.x + distanceToSun[i], sun.transform.position.y);
-            startValues.maxHP = maxPlanetHP;
-            startValues.planetType = (i == selectedPlayerPlanetIndex) ? PlanetType.Player : PlanetType.Enemy;
-            startValues.rocketType = distributedRockets[i].Item1;
-            startValues.reloadingTime = distributedRockets[i].Item2;
-
-            PlanetController planetController = newPlanet.GetComponent<PlanetController>();
-            planetController.Initialize(startValues);
-            planets.Add(newPlanet);
-
+            newPlanet.AddComponent<PlayerPlanetAttack>();
         }
-        return Tuple.Create(planets, planets[selectedPlayerPlanetIndex]);
+        else
+        {
+            newPlanet.AddComponent<EnemyPlanetAttack>();
+        }
+
+        var randomRocket = rocketManager.GetRandomRocket();
+        startValues.rocketType = randomRocket.GetRocketType();
+        startValues.reloadingTime = randomRocket.GetCooldown();
+
+        PlanetController planetController = newPlanet.GetComponent<PlanetController>();
+        planetController.Initialize(startValues);
+
+        return newPlanet;
     }
 
     // to prevent copies
@@ -71,6 +81,7 @@ public class PlanetFactory : MonoBehaviour
         return planetSprites[rand];
     }
 
+
     public void Reset()
     {
         planetWithSuchSpriteExists = new bool[planetSprites.Length];
@@ -80,7 +91,7 @@ public class PlanetFactory : MonoBehaviour
     {
         Reset();
         
-        rocketPool = ServiceLocator.GetInstance().GetRocketPool();
+        rocketManager = ServiceLocator.GetInstance().GetRocketManager();
         sun = ServiceLocator.GetInstance().GetSolarSystemManager().GetSun();
     }
 }

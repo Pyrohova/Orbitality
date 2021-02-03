@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyPlanetAttack : MonoBehaviour, IAttackTactik
 {
-    private RocketPool rocketPool;
+    private RocketManager rocketManager;
     private RocketType rocketType;
     private PlanetState planetState = PlanetState.ReadyToAttack;
     private GameObject readyToAttackIcon;
@@ -12,9 +12,11 @@ public class EnemyPlanetAttack : MonoBehaviour, IAttackTactik
     private float cooldown;
     private IEnemyPlanetAI enemyPlanetAI;
 
+    private float maxIntervalBetweenShots = 7f;
+
     private void Start()
     {
-        rocketPool = ServiceLocator.GetInstance().GetRocketPool();
+        rocketManager = ServiceLocator.GetInstance().GetRocketManager();
     }
 
     private IEnumerator DisableShootUntillCooldownEnds()
@@ -22,13 +24,16 @@ public class EnemyPlanetAttack : MonoBehaviour, IAttackTactik
         readyToAttackIcon.SetActive(false);
         planetState = PlanetState.OnCooldown;
         yield return new WaitForSeconds(cooldown);
-        planetState = PlanetState.ReadyToAttack;
+
         readyToAttackIcon.SetActive(true);
+        yield return new WaitForSeconds(Random.Range(0, maxIntervalBetweenShots));
+
+        planetState = PlanetState.ReadyToAttack;
     }
 
     public void Shoot(Vector2 dir)
     {
-        rocketPool.AcquireRocket(rocketType, transform.position, dir);
+        rocketManager.CreateRocket(rocketType, gameObject.transform, dir);
         planetController.UpdateCooldown();
         StartCoroutine(DisableShootUntillCooldownEnds());
     }
@@ -52,6 +57,6 @@ public class EnemyPlanetAttack : MonoBehaviour, IAttackTactik
     private void Awake()
     {
         planetController = GetComponent<PlanetController>();
-        enemyPlanetAI = ServiceLocator.GetInstance().GetEnemyAIManager().GetStrategyShootClosest();
+        enemyPlanetAI = ServiceLocator.GetInstance().GetEnemyAIManager().GetRandomEnemyStrategy();
     }
 }

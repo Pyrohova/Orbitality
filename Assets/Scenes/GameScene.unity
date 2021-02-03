@@ -188,6 +188,7 @@ GameObject:
   - component: {fileID: 165273139}
   - component: {fileID: 165273140}
   - component: {fileID: 165273142}
+  - component: {fileID: 165273143}
   m_Layer: 0
   m_Name: EnemyAIManager
   m_TagString: Untagged
@@ -209,6 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   strategyShootClosestPlanet: {fileID: 165273140}
   strategyShootPlayerPlanet: {fileID: 165273142}
+  strategyShootRandom: {fileID: 165273143}
 --- !u!114 &165273140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -245,6 +247,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 77b1d8bb3094d482dace1c2b28cf261f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &165273143
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 165273138}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5471fb2f5623e4dfe9fcfcb4b89348ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &307130557 stripped
@@ -391,7 +405,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   solarSystemManager: {fileID: 2070358736}
-  rocketPool: {fileID: 820169141}
+  rocketManager: {fileID: 820169141}
   gameStateController: {fileID: 919563346}
   inputController: {fileID: 1360645957}
   enemyAIManager: {fileID: 165273139}
@@ -466,16 +480,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 820169139}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 96aeb83f7553641678a0c438922e6990, type: 3}
+  m_Script: {fileID: 11500000, guid: 461b2104d08294b0f82cccd1ff722dcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rocketPrefabs:
-  - {fileID: 1757827504447459570, guid: 579f4bcba29f64ea3b9e28e3f2d00dd2, type: 3}
-  - {fileID: 8993270227859935318, guid: b7d20fd509ee24d21b49ae78d2588639, type: 3}
-  - {fileID: 1509477384868667623, guid: c2a59fa44f0a54fffb4042fb843f02cb, type: 3}
-  maxRocketEachPlanetQuantity: 2
+  rocketCollection: {fileID: 11400000, guid: 86ab57a82625c44a48f0fd2a1210a476, type: 2}
+  allowedRocketTypes: 000000000100000002000000
   rocketParent: {fileID: 1390322521}
-  spawnPoint: {x: 0, y: 0}
 --- !u!1 &854751385
 GameObject:
   m_ObjectHideFlags: 0
@@ -500,7 +510,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 854751385}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -0.8, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1649400867}
@@ -797,7 +807,7 @@ Camera:
   far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 5.342087
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -821,7 +831,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1126269193}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -1275,25 +1285,17 @@ MonoBehaviour:
   - {fileID: 21300000, guid: de9bd78144a44764f99b085846a2e03a, type: 3}
   - {fileID: 21300000, guid: c37b6465dcc722340a3a437ce8dbbe96, type: 3}
   - {fileID: 21300000, guid: 4a868e28be12a6349a2742aa1909ed42, type: 3}
-  sizes:
-  - 0.12
-  - 0.13
-  - 0.15
-  - 0.14
+  sizeRange:
   - 0.11
-  distanceToSun:
-  - 2
-  - 3.4
-  - 5
-  - 6.7
-  - 8.2
-  planetRotationSpeeds:
-  - 0.52
-  - 0.76
-  - 0.63
-  - 0.65
-  - 0.88
-  maxPlanetHP: 100
+  - 0.15
+  distanceToSun: 2
+  distanceBetweeenPlanets: 1.5
+  planetRotationSpeedsRange:
+  - 0.25
+  - 0.75
+  maxPlanetHPRange:
+  - 50
+  - 100
   planetPrefab: {fileID: 523629417241505944, guid: 0dccc2451ebad4112986b97e9b4a92c6,
     type: 3}
   planetParent: {fileID: 1292777668}
@@ -1617,6 +1619,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2007969865}
     m_Modifications:
+    - target: {fileID: 4806677016932775260, guid: 8da9fb8e317ab4f24920215f7057e226,
+        type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4806677016932775260, guid: 8da9fb8e317ab4f24920215f7057e226,
+        type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5544917474258543682, guid: 8da9fb8e317ab4f24920215f7057e226,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -1637,6 +1649,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5544917474830326122, guid: 8da9fb8e317ab4f24920215f7057e226,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5544917475367069538, guid: 8da9fb8e317ab4f24920215f7057e226,
         type: 3}
       propertyPath: m_Value
@@ -1651,6 +1668,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5544917475680249588, guid: 8da9fb8e317ab4f24920215f7057e226,
+        type: 3}
+      propertyPath: m_FillAmount
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5544917475987495032, guid: 8da9fb8e317ab4f24920215f7057e226,
         type: 3}

@@ -7,16 +7,17 @@ public class InputController : MonoBehaviour
 {
     public Action<Vector2> OnPlayerClick;
 
-    public Vector2 GetDirection()
+    public Vector2 GetMousePoint()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition).normalized;
+        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
     private void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            OnPlayerClick?.Invoke(GetDirection());
+            Debug.Log(GetMousePoint());
+            OnPlayerClick?.Invoke(GetMousePoint());
         }
     }
 }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
 {
-    private RocketPool rocketPool;
+    private RocketManager rocketManager;
     private RocketType rocketType;
     private PlanetState planetState = PlanetState.ReadyToAttack;
     private GameObject readyToAttackIcon;
@@ -15,14 +15,15 @@ public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
 
     private void Start()
     {
-        rocketPool = ServiceLocator.GetInstance().GetRocketPool();
+        rocketManager = ServiceLocator.GetInstance().GetRocketManager();
     }
 
-    private IEnumerator DisableshootUntillCooldownEnds()
+    private IEnumerator DisableShootUntillCooldownEnds()
     {
         readyToAttackIcon.SetActive(false);
         planetState = PlanetState.OnCooldown;
         yield return new WaitForSeconds(cooldown);
+
         planetState = PlanetState.ReadyToAttack;
         readyToAttackIcon.SetActive(true);
     }
@@ -31,9 +32,11 @@ public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
     {
         if (planetState == PlanetState.ReadyToAttack)
         {
-            rocketPool.AcquireRocket(rocketType, transform.position, dir);
+            Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
+            var rocketDirection = (dir - currentPosition).normalized;
+            rocketManager.CreateRocket(rocketType, transform, rocketDirection);
             planetController.UpdateCooldown();
-            StartCoroutine(DisableshootUntillCooldownEnds());
+            StartCoroutine(DisableShootUntillCooldownEnds());
         }
     }
 

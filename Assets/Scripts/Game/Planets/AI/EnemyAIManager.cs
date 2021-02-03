@@ -6,6 +6,7 @@ public class EnemyAIManager : MonoBehaviour
 {
     [SerializeField] private StrategyShootClosestPlanet strategyShootClosestPlanet;
     [SerializeField] private StrategyShootPlayerPlanet strategyShootPlayerPlanet;
+    [SerializeField] private StrategyShootRandom strategyShootRandom;
 
     private List<IEnemyPlanetAI> enemyPlanetStrategies;
 
@@ -19,16 +20,23 @@ public class EnemyAIManager : MonoBehaviour
         return strategyShootPlayerPlanet;
     }
 
+    public StrategyShootRandom GetStrategyShootRandom()
+    {
+        return strategyShootRandom;
+    }
+
     public IEnemyPlanetAI GetRandomEnemyStrategy()
     {
         return enemyPlanetStrategies[Random.Range(0, enemyPlanetStrategies.Count)];
     }
 
+
     public void Awake()
     {
         enemyPlanetStrategies = new List<IEnemyPlanetAI>() {
             strategyShootClosestPlanet,
-            strategyShootPlayerPlanet
+            strategyShootPlayerPlanet,
+            strategyShootRandom
         };
     }
 }

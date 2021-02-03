@@ -5,7 +5,7 @@ using UnityEngine;
 public class ServiceLocator : Singleton<ServiceLocator>
 {
     [SerializeField] private SolarSystemManager solarSystemManager;
-    [SerializeField] private RocketPool rocketPool;
+    [SerializeField] private RocketManager rocketManager;
     [SerializeField] private GameStateController gameStateController;
     [SerializeField] private InputController inputController;
     [SerializeField] private EnemyAIManager enemyAIManager;
@@ -20,9 +20,9 @@ public class ServiceLocator : Singleton<ServiceLocator>
         return solarSystemManager;
     }
 
-    public RocketPool GetRocketPool()
+    public RocketManager GetRocketManager()
     {
-        return rocketPool;
+        return rocketManager;
     }
 
     public GameStateController GetGameStateController()

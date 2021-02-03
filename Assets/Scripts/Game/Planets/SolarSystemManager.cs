@@ -15,6 +15,31 @@ public class SolarSystemManager : MonoBehaviour
     public Action<GameResult> OnPlayerDestroyed;
     public Action<GameResult> OnAllEnemiesDestroyed;
 
+    private const int MAX_PLANETS_QUANTITY = 5;
+    private const int MIN_PLANETS_QUANTITY = 3;
+
+    private void GenerateWorld()
+    {
+        int planetQuantity = UnityEngine.Random.Range(MIN_PLANETS_QUANTITY, MAX_PLANETS_QUANTITY);
+        int playerPlanetIndex = UnityEngine.Random.Range(0, planetQuantity);
+
+        planets = new List<GameObject>();
+        for (int i = 0; i < planetQuantity; i++)
+        {
+            GameObject newPlanet;
+            if (i == playerPlanetIndex)
+            {
+                newPlanet = planetFactory.CreatePlayerPlanet(i);
+                playerPlanet = newPlanet;
+            }
+            else
+            {
+                newPlanet = planetFactory.CreateEnemyPlanet(i);
+            }
+            planets.Add(newPlanet);
+        }
+    }
+
     public List<GameObject> GetAllPlanetsExceptSelected(GameObject selectedPlanet)
     {
         List<GameObject> requiredPlanets = new List<GameObject>();
@@ -45,13 +70,6 @@ public class SolarSystemManager : MonoBehaviour
 
     }
 
-    public void GenerateWorld()
-    {
-        var allPlanets = planetFactory.GenerateNewPlanets();
-        planets = allPlanets.Item1;
-        playerPlanet = allPlanets.Item2;
-    }
-
     public void ResetWorld()
     {
         planetFactory.Reset();
@@ -76,7 +94,7 @@ public class SolarSystemManager : MonoBehaviour
                     planets.RemoveAt(i);
                     i--;
                 }
-            if (planets.Count == 0)
+            if (planets.Count == 1)
             {
                 ResetWorld();
                 OnAllEnemiesDestroyed?.Invoke(GameResult.Won);
