@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ public class PlanetController : MonoBehaviour, IHittable
     [SerializeField] private Slider hpSlider;
 
     [SerializeField] private SpriteRenderer planetImage;
-    [SerializeField] private Image readyToShootImage;
+    [SerializeField] private GameObject readyToShootImage;
 
     private float speed;
     private float angleCoefficient;
@@ -18,28 +19,44 @@ public class PlanetController : MonoBehaviour, IHittable
     private float maxHP;
 
     private float reloadingTime;
-    private RocketType rocketType;
+    private PlanetType planetType;
 
-    private PlanetState state;
+    public Action<float> OnHealthChanged;
+    public Action<float> OnCooldownStarted;
 
-    private IPlanetBehaviour planetBehaviour;
+    private IAttackTactik attackTactik;
+
+    public void UpdateCooldown()
+    {
+        OnCooldownStarted?.Invoke(reloadingTime);
+    }
 
     public void Initialize(PlanetInitializationValues values)
     {
         speed = values.speed;
         maxHP = values.maxHP;
         reloadingTime = values.reloadingTime;
-        rocketType = values.rocketType;
-        planetBehaviour = values.planetBehaviour;
- 
 
         transform.position = values.distanceToSun;
         sunPosition = values.sunPosition;
         angleCoefficient = speed * 360 / values.distanceToSun.x;
         transform.localScale = new Vector2(values.scale, values.scale);
         planetImage.sprite = values.image;
+        planetType = values.planetType;
 
-}
+        if (planetType == PlanetType.Player)
+        {
+            gameObject.AddComponent<PlayerPlanetAttack>();
+        }
+        else
+        {
+            gameObject.AddComponent<EnemyPlanetAttack>();
+        }
+
+        attackTactik = GetComponent<IAttackTactik>();
+        attackTactik.Initialize(values.rocketType, values.reloadingTime, readyToShootImage);
+
+    }
 
     public void AcceptDamage(float damage)
     {
@@ -51,6 +68,8 @@ public class PlanetController : MonoBehaviour, IHittable
 
         float newValue = currentHP / maxHP;
         hpSlider.value = newValue;
+
+        OnHealthChanged?.Invoke(newValue);
     }
 
     private void Move()
@@ -70,8 +89,7 @@ public class PlanetController : MonoBehaviour, IHittable
     {
         currentHP = maxHP;
         hpSlider.value = 1;
-        state = PlanetState.ReadyToAttack;
-        readyToShootImage.gameObject.SetActive(true);
+        readyToShootImage.SetActive(true);
     }
 
     private void FixedUpdate()

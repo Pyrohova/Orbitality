@@ -20,6 +20,8 @@ public class RocketController : MonoBehaviour, IHittable
     private float currentLifetime;
     private float localRotation;
 
+    private Vector3 direction;
+
     public RocketType GetRocketType()
     {
         return type;
@@ -43,12 +45,15 @@ public class RocketController : MonoBehaviour, IHittable
     {
         IsEnabled = false;
         ServiceLocator.GetInstance().GetRocketPool().ReleaseRocket(this);
+        rb.isKinematic = true;
     }
 
-    public void Enable()
+    public void Enable(Vector3 direction)
     {
+        this.direction = direction;
         IsEnabled = true;
         currentLifetime = maxLifetime;
+        rb.isKinematic = false;
     }
 
     public void AcceptDamage(float damage)
@@ -58,16 +63,12 @@ public class RocketController : MonoBehaviour, IHittable
 
     private void Move()
     {
-        Vector3 curDir = transform.position.normalized;
+        Vector3 curDir = direction;
 
         float angle = Vector3.SignedAngle(curDir, rb.velocity, transform.forward);
-        transform.RotateAround(transform.position, transform.forward, angle);
         rb.AddForce(curDir * speed);
 
-        CalculateGravity();
-
-        localRotation += Time.deltaTime * 360;
-        transform.localRotation = Quaternion.Euler(new Vector2(0, localRotation));
+        //CalculateGravity();
     }
 
     private void CalculateGravity()

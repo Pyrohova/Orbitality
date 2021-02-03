@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -64,9 +65,31 @@ public class GameUIManager : MonoBehaviour
         }
     }
 
+    public void UpdatePlayerHealthBarValue(float newValue)
+    {
+        hpSlider.value = newValue;
+    }
+
+    public void UpdatePlayerCooldownBarValue(float cooldown)
+    {
+        StartCoroutine(UpdateCooldown(cooldown));
+    }
+
+    private IEnumerator UpdateCooldown(float cooldown)
+    {
+        float currentCooldown = cooldown;
+        while (currentCooldown > 0)
+        {
+            currentCooldown -= 1;
+            yield return new WaitForSeconds(1);
+            cooldownSlider.value = currentCooldown / cooldown;
+        }
+    }
+
     private void Start()
     {
         var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
+        var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
 
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
@@ -77,27 +100,31 @@ public class GameUIManager : MonoBehaviour
 
         pauseButton.onClick.AddListener(() => {
             ShowPauseScreen();
-            GameStateController.Pause();
+            gameStateController.Pause();
         });
 
         mainMenuButton.onClick.AddListener(() => {
             SceneManager.LoadMainMenuScene();
-            GameStateController.Finish();
+            gameStateController.Finish();
             solarSystemManager.ResetWorld();
         });
 
         continueButton.onClick.AddListener(() => {
             ShowInGameScreen();
-            GameStateController.Resume();
+            gameStateController.Resume();
         });
 
         mainMenuButtonPauseScreen.onClick.AddListener(() => {
             SceneManager.LoadMainMenuScene();
-            GameStateController.Finish();
+            gameStateController.Finish();
             solarSystemManager.ResetWorld();
         });
 
         ShowInGameScreen();
+
+        var playerPlanet = solarSystemManager.GetPlayerPlanet().GetComponent<PlanetController>();
+        playerPlanet.OnHealthChanged += UpdatePlayerHealthBarValue;
+        playerPlanet.OnCooldownStarted += UpdatePlayerCooldownBarValue;
 
     }
 }

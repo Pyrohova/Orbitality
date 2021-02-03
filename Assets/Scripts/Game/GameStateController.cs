@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class GameStateController
+public  class GameStateController: MonoBehaviour
 {
-    public static GameState GameState { get; private set; } = GameState.NotRunning;
+    public GameState GameState { get; private set; } = GameState.NotRunning;
 
-    public static void Pause()
+    public void Pause()
     {
         if (GameState == GameState.Running)
         {
@@ -15,7 +15,7 @@ public static class GameStateController
         }
     }
 
-    public static void Resume()
+    public void Resume()
     {
         if (GameState == GameState.Paused)
         {
@@ -24,12 +24,12 @@ public static class GameStateController
         }
     }
 
-    public static void Start()
+    public void Start()
     {
         GameState = GameState.Running;
     }
 
-    public static void Finish()
+    public void Finish()
     {
         if (GameState == GameState.Paused)
         {

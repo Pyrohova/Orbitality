@@ -15,9 +15,7 @@ public class PlanetInitializationValues
     public float maxHP;
 
     public RocketType rocketType;
+    public PlanetType planetType;
 
     public float reloadingTime;
-    public PlanetState state;
-
-    public IPlanetBehaviour planetBehaviour;
 }

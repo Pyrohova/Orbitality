@@ -6,7 +6,7 @@ using UnityEngine;
 public class RocketPool : MonoBehaviour
 {
     [SerializeField] private RocketController[] rocketPrefabs;
-    [SerializeField] private int maxRocketEachPlanetQuantity = 2;
+    [SerializeField] private int maxRocketEachPlanetQuantity = 1;
     [SerializeField] private GameObject rocketParent;
     [SerializeField] private Vector2 spawnPoint;
 
@@ -16,7 +16,7 @@ public class RocketPool : MonoBehaviour
 
     public void GenerateRockets(List<RocketType> selectedTypes)
     {
-        Dictionary<RocketType, List<RocketController>> existedRockets = new Dictionary<RocketType, List<RocketController>>();
+        existedRockets = new Dictionary<RocketType, List<RocketController>>();
         foreach (RocketController rocket in rocketPrefabs)
         {
             existedRockets.Add(rocket.GetRocketType(), new List<RocketController>());
@@ -71,7 +71,7 @@ public class RocketPool : MonoBehaviour
             var selectedRocket = selectedListByType[i].GetComponent<RocketController>();
             if (!selectedRocket.IsEnabled)
             {
-                selectedRocket.Enable();
+                selectedRocket.Enable(direction);
                 selectedRocket.gameObject.transform.position = newPosition;
                 break;
             }
@@ -90,6 +90,19 @@ public class RocketPool : MonoBehaviour
                 break;
             }
         }
+    }
+
+    public void Reset()
+    {
+        foreach (RocketType rocketType in existedRockets.Keys)
+        {
+            foreach (RocketController rocket in existedRockets[rocketType])
+            {
+                Destroy(rocket.gameObject);
+            }
+        }
+        existedRockets = new Dictionary<RocketType, List<RocketController>>();
+
     }
 
 }
