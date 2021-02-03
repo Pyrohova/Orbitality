@@ -18,9 +18,10 @@ public class RocketController : MonoBehaviour, IHittable
     public bool IsEnabled { get; private set; } = false;
 
     private float currentLifetime;
-    private float localRotation;
 
     private Vector3 direction;
+
+    private GameObject nativePlanet;
 
     public RocketType GetRocketType()
     {
@@ -36,8 +37,11 @@ public class RocketController : MonoBehaviour, IHittable
     {
         if (IsEnabled)
         {
-            var hittable = collision.gameObject.GetComponent<IHittable>();
-            hittable.AcceptDamage(damage);
+            if (collision.gameObject != nativePlanet)
+            {
+                var hittable = collision.gameObject.GetComponent<IHittable>();
+                hittable.AcceptDamage(damage);
+            }
         }
     }
 
@@ -48,9 +52,11 @@ public class RocketController : MonoBehaviour, IHittable
         rb.isKinematic = true;
     }
 
-    public void Enable(Vector3 direction)
+    public void Enable(Vector3 direction, GameObject nativePlanet)
     {
         this.direction = direction;
+        this.nativePlanet = nativePlanet;
+
         IsEnabled = true;
         currentLifetime = maxLifetime;
         rb.isKinematic = false;

@@ -90,7 +90,7 @@ public class SolarSystemManager : MonoBehaviour
 
     }
 
-    public void Start()
+    public void Awake()
     {
         GenerateWorld();
     }

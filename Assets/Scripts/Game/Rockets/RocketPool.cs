@@ -6,7 +6,7 @@ using UnityEngine;
 public class RocketPool : MonoBehaviour
 {
     [SerializeField] private RocketController[] rocketPrefabs;
-    [SerializeField] private int maxRocketEachPlanetQuantity = 1;
+    [SerializeField] private int maxRocketEachPlanetQuantity = 2;
     [SerializeField] private GameObject rocketParent;
     [SerializeField] private Vector2 spawnPoint;
 
@@ -32,13 +32,14 @@ public class RocketPool : MonoBehaviour
                 {
                     int counter = 0;
                     // repeat max permitted time
-                    while (counter < maxRocketEachPlanetQuantity)
+                    while (counter != maxRocketEachPlanetQuantity)
                     {
                         // create new rocket with required type and save it into the appropriate list
                         RocketController newRocket = Instantiate(rocketPrefabs[j]);
                         existedRockets[selectedTypes[i]].Add(newRocket);
                         newRocket.gameObject.transform.SetParent(rocketParent.transform);
                         newRocket.transform.position = spawnPoint;
+                        ++counter;
                     }
                 }
             }
@@ -71,7 +72,7 @@ public class RocketPool : MonoBehaviour
             var selectedRocket = selectedListByType[i].GetComponent<RocketController>();
             if (!selectedRocket.IsEnabled)
             {
-                selectedRocket.Enable(direction);
+                selectedRocket.Enable(direction, selectedRocket.gameObject);
                 selectedRocket.gameObject.transform.position = newPosition;
                 break;
             }

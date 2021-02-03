@@ -88,8 +88,12 @@ public class GameUIManager : MonoBehaviour
 
     private void Start()
     {
+        hpSlider.value = 1;
+        cooldownSlider.value = 0;
+
         var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
         var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
+        var rocketPool = ServiceLocator.GetInstance().GetRocketPool();
 
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
@@ -107,6 +111,7 @@ public class GameUIManager : MonoBehaviour
             SceneManager.LoadMainMenuScene();
             gameStateController.Finish();
             solarSystemManager.ResetWorld();
+            rocketPool.Reset();
         });
 
         continueButton.onClick.AddListener(() => {
@@ -118,6 +123,7 @@ public class GameUIManager : MonoBehaviour
             SceneManager.LoadMainMenuScene();
             gameStateController.Finish();
             solarSystemManager.ResetWorld();
+            rocketPool.Reset();
         });
 
         ShowInGameScreen();

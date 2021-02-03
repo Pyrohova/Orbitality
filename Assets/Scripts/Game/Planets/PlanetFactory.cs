@@ -54,13 +54,13 @@ public class PlanetFactory : MonoBehaviour
             planets.Add(newPlanet);
 
         }
-        return Tuple.Create<List<GameObject>, GameObject>(planets, planets[selectedPlayerPlanetIndex]);
+        return Tuple.Create(planets, planets[selectedPlayerPlanetIndex]);
     }
 
     // to prevent copies
     private Sprite GenerateRandomSprite()
     {
-        int rand = 0;
+        int rand;
         do
         {
             rand = UnityEngine.Random.Range(0, planetSprites.Length);
