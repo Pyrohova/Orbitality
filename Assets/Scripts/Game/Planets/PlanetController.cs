@@ -21,7 +21,7 @@ public class PlanetController : MonoBehaviour, IHittable
     public Action<float> OnHealthChanged;
     public Action<float> OnCooldownStarted;
 
-    private IAttackTactik attackTactik;
+    private PlanetAttackController planetAttackController;
 
     public void UpdateCooldown(float cooldown)
     {
@@ -40,8 +40,8 @@ public class PlanetController : MonoBehaviour, IHittable
         transform.localScale = new Vector2(values.scale, values.scale);
         planetImage.sprite = values.image;
 
-        attackTactik = GetComponent<IAttackTactik>();
-        attackTactik.Initialize(values.rocketType, values.reloadingTime, readyToShootImage);
+        planetAttackController = GetComponent<PlanetAttackController>();
+        planetAttackController.Initialize(values.rocketType, values.reloadingTime, readyToShootImage);
 
     }
 

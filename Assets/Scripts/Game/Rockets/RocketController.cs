@@ -89,14 +89,13 @@ public class RocketController : MonoBehaviour, IHittable
         transform.rotation = Quaternion.FromToRotation(Vector2.up, direction.normalized);
     }
 
-    private bool startedFlying = false;
-
     private void FixedUpdate()
     {
             currentLifetime -= Time.deltaTime;
             if (currentLifetime > 0)
             {
-                MoveAlongParabola();
+                Move();
+                //MoveAlongParabola();
             }
             else
             {

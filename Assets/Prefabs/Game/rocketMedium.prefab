@@ -133,11 +133,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33b32ea2d10b2402a92c35e0fe42d05e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  speed: 12
   damage: 10
   weight: 0.75
   maxLifetime: 12
-  gravityCoefficient: 20
+  gravityCoefficient: 25
   cooldown: 7
   type: 1
   rb: {fileID: 8993270227859935319}

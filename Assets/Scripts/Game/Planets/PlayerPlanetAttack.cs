@@ -2,23 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
+public class PlayerPlanetAttack : PlanetAttackController
 {
-    private RocketManager rocketManager;
-    private RocketType rocketType;
-    private PlanetState planetState = PlanetState.ReadyToAttack;
-    private GameObject readyToAttackIcon;
-    private PlanetController planetController;
-    private float cooldown;
-
     private InputController inputController;
 
-    private void Start()
-    {
-        rocketManager = ServiceLocator.GetInstance().GetRocketManager();
-    }
 
-    private IEnumerator DisableShootUntillCooldownEnds()
+    protected override IEnumerator DisableShootUntillCooldownEnds()
     {
         readyToAttackIcon.SetActive(false);
         planetState = PlanetState.OnCooldown;
@@ -28,7 +17,7 @@ public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
         readyToAttackIcon.SetActive(true);
     }
 
-    public void Shoot(Vector2 dir)
+    public override void Shoot(Vector2 dir)
     {
         if (planetState == PlanetState.ReadyToAttack)
         {
@@ -40,12 +29,8 @@ public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
         }
     }
 
-    public void Initialize(RocketType rocketType, float cooldown, GameObject readyToAttackIcon)
+    public void Awake()
     {
-        this.rocketType = rocketType;
-        this.cooldown = cooldown;
-        this.readyToAttackIcon = readyToAttackIcon;
-
         inputController = ServiceLocator.GetInstance().GetInputController();
         inputController.OnPlayerClick += Shoot;
         planetController = GetComponent<PlanetController>();
