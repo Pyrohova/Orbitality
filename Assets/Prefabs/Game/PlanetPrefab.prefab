@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 523629416375983183}
   - component: {fileID: 523629416375983180}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: HPSlider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,7 +100,7 @@ GameObject:
   - component: {fileID: 523629416421181594}
   - component: {fileID: 523629416421181592}
   - component: {fileID: 523629416421181595}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -174,7 +174,7 @@ GameObject:
   - component: {fileID: 523629416422861850}
   - component: {fileID: 523629416422861848}
   - component: {fileID: 523629416422861851}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -248,7 +248,7 @@ GameObject:
   - component: {fileID: 523629416856392990}
   - component: {fileID: 523629416856392988}
   - component: {fileID: 523629416856392991}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -323,7 +323,7 @@ GameObject:
   - component: {fileID: 523629417241505951}
   - component: {fileID: 523629417241505950}
   - component: {fileID: 1185018736297826457}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlanetPrefab
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -435,7 +435,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523629417657940438}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -474,7 +474,7 @@ GameObject:
   - component: {fileID: 523629417776543901}
   - component: {fileID: 523629417776543900}
   - component: {fileID: 523629417776543903}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 523629417867607841}
   - component: {fileID: 523629417867607847}
   - component: {fileID: 523629417867607846}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: CooldownImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -645,7 +645,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 523629418044294802}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Handle Slide Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
