@@ -12,12 +12,21 @@ public class InputController : MonoBehaviour
         return Camera.main.ScreenToWorldPoint(Input.mousePosition);
     }
 
+    public Vector2 GetTouchPoint()
+    {
+        return Camera.main.ScreenToWorldPoint(Input.GetTouch(0).position);
+    }
+
     private void FixedUpdate()
     {
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log(GetMousePoint());
             OnPlayerClick?.Invoke(GetMousePoint());
+        }
+
+        if (Input.touchCount > 0)
+        {
+            OnPlayerClick?.Invoke(GetTouchPoint());
         }
     }
 }

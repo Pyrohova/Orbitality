@@ -34,7 +34,7 @@ public class EnemyPlanetAttack : MonoBehaviour, IAttackTactik
     public void Shoot(Vector2 dir)
     {
         rocketManager.CreateRocket(rocketType, gameObject.transform, dir);
-        planetController.UpdateCooldown();
+        planetController.UpdateCooldown(cooldown);
         StartCoroutine(DisableShootUntillCooldownEnds());
     }
 

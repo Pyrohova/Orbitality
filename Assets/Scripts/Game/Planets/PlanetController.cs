@@ -18,16 +18,14 @@ public class PlanetController : MonoBehaviour, IHittable
     private float currentHP;
     private float maxHP;
 
-    private float reloadingTime;
-
     public Action<float> OnHealthChanged;
     public Action<float> OnCooldownStarted;
 
     private IAttackTactik attackTactik;
 
-    public void UpdateCooldown()
+    public void UpdateCooldown(float cooldown)
     {
-        OnCooldownStarted?.Invoke(reloadingTime);
+        OnCooldownStarted?.Invoke(cooldown);
     }
 
     public void Initialize(PlanetInitializationValues values)
@@ -35,8 +33,6 @@ public class PlanetController : MonoBehaviour, IHittable
         speed = values.speed;
         maxHP = values.maxHP;
         currentHP = maxHP;
-
-        reloadingTime = values.reloadingTime;
 
         transform.position = values.distanceToSun;
         sunPosition = values.sunPosition;

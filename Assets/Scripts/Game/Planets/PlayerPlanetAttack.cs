@@ -35,7 +35,7 @@ public class PlayerPlanetAttack : MonoBehaviour, IAttackTactik
             Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
             var rocketDirection = (dir - currentPosition).normalized;
             rocketManager.CreateRocket(rocketType, transform, rocketDirection);
-            planetController.UpdateCooldown();
+            planetController.UpdateCooldown(cooldown);
             StartCoroutine(DisableShootUntillCooldownEnds());
         }
     }

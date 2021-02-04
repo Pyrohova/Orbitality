@@ -20,6 +20,7 @@ public class RocketController : MonoBehaviour, IHittable
     private GameObject nativePlanet;
 
     private RocketManager rocketManager;
+    private SolarSystemManager solarSystemManager;
 
     public RocketType GetRocketType()
     {
@@ -60,22 +61,17 @@ public class RocketController : MonoBehaviour, IHittable
         Explode();
     }
 
-    private void Move()
+
+    private void MoveAlongParabola()
     {
-        //Vector3 curDir = direction;
+        Vector3 nDir = direction.normalized;
 
-        //float angle = Vector3.SignedAngle(curDir, rb.velocity, transform.forward);
-        //rb.AddForce(curDir * speed);
-
-        rb.velocity = speed * direction.normalized;
+        float angle = Vector2.SignedAngle(nDir, rb.velocity);
         transform.rotation = Quaternion.FromToRotation(Vector2.up, direction.normalized);
+        transform.RotateAround(transform.position, transform.forward, angle);
+        rb.AddForce(nDir * speed);
 
-        //CalculateGravity();
-    }
-
-    private void CalculateGravity()
-    {
-        List<GameObject> planets = ServiceLocator.GetInstance().GetSolarSystemManager().GetPlanets();
+        List<GameObject> planets = solarSystemManager.GetPlanets();
 
         foreach (GameObject planet in planets)
         {
@@ -86,12 +82,21 @@ public class RocketController : MonoBehaviour, IHittable
         }
     }
 
+
+    private void Move()
+    {
+        rb.velocity = speed * direction.normalized;
+        transform.rotation = Quaternion.FromToRotation(Vector2.up, direction.normalized);
+    }
+
+    private bool startedFlying = false;
+
     private void FixedUpdate()
     {
             currentLifetime -= Time.deltaTime;
             if (currentLifetime > 0)
             {
-                Move();
+                MoveAlongParabola();
             }
             else
             {
@@ -103,5 +108,6 @@ public class RocketController : MonoBehaviour, IHittable
     {
         rb.mass = weight;
         rocketManager = ServiceLocator.GetInstance().GetRocketManager();
+        solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
     }
 }
