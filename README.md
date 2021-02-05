@@ -12,7 +12,8 @@
 <hr>
 <b>Additional information</b>
 <br>When the game starts the world generates player planet and 2-4 enemy planets.
-<br>If one of planets is ready to shoot you'll see a little rocket icon on it's right top corner.
+<br>If one of planets is ready to shoot you'll see a little rocket icon on it's right top corner. Each planet has slider with it's healthbar.
+<br>You will also see you're planet hp and cooldown in details on the panel in the left bottom corner.
 <br>Each of planets get it's values random - appearance, size, rotation speed, position, rocket type.
 <br>There are 3 enemy planet attack strategies - to shoot random point, the closest planet or player planet.
 <br>Also there are 3 rocket types that differ from each other in acceleration speed, damage, cooldown, weight, lifetime.
