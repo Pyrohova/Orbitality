@@ -14,7 +14,7 @@
 <br>By default rocket flies in normal(forward) direction, parabolic movement can be enabled in code - it can look strange coz it still needs correct selection of coefficients
 <br>When the game starts the world generates player planet and 2-4 enemy planets.
 <br>If one of planets is ready to shoot you'll see a little rocket icon on it's right top corner. Each planet has slider with it's healthbar.
-<br>You will also see you're planet hp and cooldown in details on the panel in the left bottom corner.
+<br>You will also see your planet hp and cooldown in details on the panel in the left bottom corner.
 <br>Each of planets get it's values random - appearance, size, rotation speed, position, rocket type.
 <br>There are 3 enemy planet attack strategies - to shoot random point, the closest planet or player planet.
 <br>Rocket remembers it's native planet so will ignore collisions with them and move further.
