@@ -103,16 +103,10 @@ public class GameUIManager : MonoBehaviour
         var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
         var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
         var rocketPool = ServiceLocator.GetInstance().GetRocketManager();
-        var playerPlanet = solarSystemManager.GetPlayerPlanet().GetComponent<PlanetController>();
-
-        //subscribe on events
-        playerPlanet.OnHealthChanged += UpdatePlayerHealthBarValue;
-        playerPlanet.OnCooldownStarted += UpdatePlayerCooldownBarValue;
 
         solarSystemManager.OnAllEnemiesDestroyed += (result) => { ShowGameOverScreen(result); };
         solarSystemManager.OnPlayerDestroyed += (result) => { ShowGameOverScreen(result); };
 
-        //set callbacks on buttons
         pauseButton.onClick.AddListener(() => {
             ShowPauseScreen();
             gameStateController.Pause();

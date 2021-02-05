@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,6 +9,8 @@ using UnityEngine;
 public class PlayerPlanetAttack : PlanetAttackController
 {
     private InputController inputController;
+
+    private Action<float> OnCooldownStarted;
 
     protected override IEnumerator ReloadShooting()
     {
@@ -28,8 +31,9 @@ public class PlayerPlanetAttack : PlanetAttackController
             Vector2 currentPosition = new Vector2(transform.position.x, transform.position.y);
             var rocketDirection = (dir - currentPosition).normalized;
             rocketManager.CreateRocket(rocketType, transform, rocketDirection);
-            planetController.UpdateCooldown(cooldown);
             StartCoroutine(ReloadShooting());
+
+            OnCooldownStarted?.Invoke(cooldown);
         }
     }
 
@@ -38,6 +42,8 @@ public class PlayerPlanetAttack : PlanetAttackController
         inputController = ServiceLocator.GetInstance().GetInputController();
         inputController.OnPlayerClick += Shoot;
         planetController = GetComponent<PlanetController>();
+
+        OnCooldownStarted += (cooldown) => { ServiceLocator.GetInstance().GetGameUIManager().UpdatePlayerCooldownBarValue(cooldown); };
     }
 
 }

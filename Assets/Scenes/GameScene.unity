@@ -149,8 +149,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_Father: {fileID: 638660275}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &124764778
 MonoBehaviour:
@@ -409,6 +409,7 @@ MonoBehaviour:
   gameStateController: {fileID: 919563346}
   inputController: {fileID: 1360645957}
   enemyAIManager: {fileID: 165273139}
+  gameUIManager: {fileID: 124764778}
 --- !u!4 &638660275
 Transform:
   m_ObjectHideFlags: 0
@@ -425,8 +426,9 @@ Transform:
   - {fileID: 919563347}
   - {fileID: 165273141}
   - {fileID: 1360645956}
+  - {fileID: 124764774}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &701606028 stripped
 MonoBehaviour:

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /// <summary>
-/// Controls planet's movement and hp, calls events on changing hp or cooldown values.
+/// Controls planet's movement and hp.
 /// </summary>
 public class PlanetController : MonoBehaviour, IHittable
 {
@@ -21,16 +21,10 @@ public class PlanetController : MonoBehaviour, IHittable
     private float currentHP;
     private float maxHP;
 
-    public Action<float> OnHealthChanged;
-    public Action<float> OnCooldownStarted;
+    private Action<float> OnHealthChanged;
 
     //part that controls current planet attack on other planets
     private PlanetAttackController planetAttackController;
-
-    public void UpdateCooldown(float cooldown)
-    {
-        OnCooldownStarted?.Invoke(cooldown);
-    }
 
     public void Initialize(PlanetInitializationValues values)
     {
@@ -84,6 +78,8 @@ public class PlanetController : MonoBehaviour, IHittable
     {
         hpSlider.value = 1;
         readyToShootImage.SetActive(true);
+
+        OnHealthChanged += (cooldown) => { ServiceLocator.GetInstance().GetGameUIManager().UpdatePlayerHealthBarValue(cooldown); };
     }
 
     private void FixedUpdate()

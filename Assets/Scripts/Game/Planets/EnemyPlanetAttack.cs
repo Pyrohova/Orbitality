@@ -29,7 +29,6 @@ public class EnemyPlanetAttack : PlanetAttackController
     public override void Shoot(Vector2 dir)
     {
         rocketManager.CreateRocket(rocketType, gameObject.transform, dir);
-        planetController.UpdateCooldown(cooldown);
         StartCoroutine(ReloadShooting());
     }
 
@@ -46,5 +45,6 @@ public class EnemyPlanetAttack : PlanetAttackController
     {
         planetController = GetComponent<PlanetController>();
         enemyPlanetAI = ServiceLocator.GetInstance().GetEnemyAIManager().GetRandomEnemyStrategy();
+
     }
 }

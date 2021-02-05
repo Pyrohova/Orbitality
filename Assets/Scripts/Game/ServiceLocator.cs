@@ -10,6 +10,9 @@ public class ServiceLocator : Singleton<ServiceLocator>
     [SerializeField] private InputController inputController;
     [SerializeField] private EnemyAIManager enemyAIManager;
 
+    [Header("UI")]
+    [SerializeField] private GameUIManager gameUIManager; 
+
     public static ServiceLocator GetInstance()
     {
         return Instance;
@@ -38,6 +41,11 @@ public class ServiceLocator : Singleton<ServiceLocator>
     public EnemyAIManager GetEnemyAIManager()
     {
         return enemyAIManager;
+    }
+
+    public GameUIManager GetGameUIManager()
+    {
+        return gameUIManager;
     }
 
 }
