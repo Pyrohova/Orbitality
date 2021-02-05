@@ -113,10 +113,10 @@ public class GameUIManager : MonoBehaviour
         });
 
         mainMenuButton.onClick.AddListener(() => {
-            SceneManager.LoadMainMenuScene();
             gameStateController.Finish();
             solarSystemManager.ResetWorld();
             rocketPool.Reset();
+            SceneManager.LoadMainMenuScene();
         });
 
         continueButton.onClick.AddListener(() => {
@@ -125,10 +125,10 @@ public class GameUIManager : MonoBehaviour
         });
 
         mainMenuButtonPauseScreen.onClick.AddListener(() => {
-            SceneManager.LoadMainMenuScene();
             gameStateController.Finish();
             solarSystemManager.ResetWorld();
             rocketPool.Reset();
+            SceneManager.LoadMainMenuScene();
         });
 
     }

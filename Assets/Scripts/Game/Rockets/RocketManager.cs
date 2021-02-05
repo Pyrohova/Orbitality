@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /// <summary>
@@ -44,10 +45,10 @@ public class RocketManager : MonoBehaviour
 
     public void Reset()
     {
-        foreach (RocketController rocket in existedRockets)
-        {
-            RemoveRocket(rocket);
-        }
+       foreach (RocketController rocket in existedRockets.ToList())
+       {
+           RemoveRocket(rocket);
+       }
         existedRockets = new List<RocketController>();
 
     }

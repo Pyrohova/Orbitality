@@ -20,6 +20,8 @@ public class RocketController : MonoBehaviour, IHittable
 
     private float currentLifetime;
     private Vector3 direction;
+
+    //rocket remembers it's native planet so will ignore collisions with them and move further
     private GameObject nativePlanet;
 
     private RocketManager rocketManager;

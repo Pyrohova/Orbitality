@@ -138,6 +138,6 @@ MonoBehaviour:
   weight: 0.5
   maxLifetime: 15
   gravityCoefficient: 25
-  cooldown: 10
+  cooldown: 7
   type: 2
   rb: {fileID: 1509477384868667620}

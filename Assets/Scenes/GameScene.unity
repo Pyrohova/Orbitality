@@ -1294,7 +1294,7 @@ MonoBehaviour:
   distanceBetweeenPlanets: 1.5
   planetRotationSpeedsRange:
   - 0.25
-  - 0.75
+  - 0.6
   maxPlanetHPRange:
   - 50
   - 100
