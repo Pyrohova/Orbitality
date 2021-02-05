@@ -3,6 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains all rocket prefabs as values and their types as keys for quick access.
+/// </summary>
 [CreateAssetMenu]
 public class RocketCollection : ScriptableObject
 {

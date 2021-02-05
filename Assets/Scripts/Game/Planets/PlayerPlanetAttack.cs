@@ -2,17 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows player's planet to attack other planets using player's input.
+/// </summary>
 public class PlayerPlanetAttack : PlanetAttackController
 {
     private InputController inputController;
 
-
-    protected override IEnumerator DisableShootUntillCooldownEnds()
+    protected override IEnumerator ReloadShooting()
     {
+        //disable shooting
         readyToAttackIcon.SetActive(false);
         planetState = PlanetState.OnCooldown;
         yield return new WaitForSeconds(cooldown);
 
+        //enable shooting
         planetState = PlanetState.ReadyToAttack;
         readyToAttackIcon.SetActive(true);
     }
@@ -25,7 +29,7 @@ public class PlayerPlanetAttack : PlanetAttackController
             var rocketDirection = (dir - currentPosition).normalized;
             rocketManager.CreateRocket(rocketType, transform, rocketDirection);
             planetController.UpdateCooldown(cooldown);
-            StartCoroutine(DisableShootUntillCooldownEnds());
+            StartCoroutine(ReloadShooting());
         }
     }
 

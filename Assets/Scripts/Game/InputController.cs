@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls user input.
+/// </summary>
 public class InputController : MonoBehaviour
 {
     public Action<Vector2> OnPlayerClick;

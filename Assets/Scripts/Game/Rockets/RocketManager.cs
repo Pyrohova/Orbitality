@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Creates and destroyes rockets.
+/// </summary>
 public class RocketManager : MonoBehaviour
 {
     [SerializeField] private RocketCollection rocketCollection;

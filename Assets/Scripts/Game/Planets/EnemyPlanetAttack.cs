@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows enemy planet to attack other planets using one of strategies.
+/// </summary>
 public class EnemyPlanetAttack : PlanetAttackController
 {
-    private IEnemyPlanetAI enemyPlanetAI;
+    private IEnemyPlanetAttackStrategy enemyPlanetAI;
 
     private float maxIntervalBetweenShots = 7f;
 
-    protected override IEnumerator DisableShootUntillCooldownEnds()
+    protected override IEnumerator ReloadShooting()
     {
+        //disable shooting
         readyToAttackIcon.SetActive(false);
         planetState = PlanetState.OnCooldown;
         yield return new WaitForSeconds(cooldown);
 
+        //make random delay between shots
         readyToAttackIcon.SetActive(true);
         yield return new WaitForSeconds(Random.Range(0, maxIntervalBetweenShots));
 
+        //enable shooting
         planetState = PlanetState.ReadyToAttack;
     }
 
@@ -24,7 +30,7 @@ public class EnemyPlanetAttack : PlanetAttackController
     {
         rocketManager.CreateRocket(rocketType, gameObject.transform, dir);
         planetController.UpdateCooldown(cooldown);
-        StartCoroutine(DisableShootUntillCooldownEnds());
+        StartCoroutine(ReloadShooting());
     }
 
     private void FixedUpdate()

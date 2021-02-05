@@ -3,11 +3,15 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Helps to create new planets using range values.
+/// </summary>
 public class PlanetFactory : MonoBehaviour
 {
     [SerializeField] private Sprite[] planetSprites;
 
     [SerializeField] private float[] sizeRange = {0.11f, 0.15f};
+
     [SerializeField] private float distanceToSun = 2f;
     [SerializeField] private  float distanceBetweeenPlanets = 1.5f;
 

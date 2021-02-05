@@ -2,13 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Contains attack strategies for enemy planets.
+/// </summary>
 public class EnemyAIManager : MonoBehaviour
 {
     [SerializeField] private StrategyShootClosestPlanet strategyShootClosestPlanet;
     [SerializeField] private StrategyShootPlayerPlanet strategyShootPlayerPlanet;
     [SerializeField] private StrategyShootRandom strategyShootRandom;
 
-    private List<IEnemyPlanetAI> enemyPlanetStrategies;
+    private List<IEnemyPlanetAttackStrategy> enemyPlanetStrategies;
 
     public StrategyShootClosestPlanet GetStrategyShootClosest()
     {
@@ -25,7 +28,7 @@ public class EnemyAIManager : MonoBehaviour
         return strategyShootRandom;
     }
 
-    public IEnemyPlanetAI GetRandomEnemyStrategy()
+    public IEnemyPlanetAttackStrategy GetRandomEnemyStrategy()
     {
         return enemyPlanetStrategies[Random.Range(0, enemyPlanetStrategies.Count)];
     }
@@ -33,7 +36,7 @@ public class EnemyAIManager : MonoBehaviour
 
     public void Awake()
     {
-        enemyPlanetStrategies = new List<IEnemyPlanetAI>() {
+        enemyPlanetStrategies = new List<IEnemyPlanetAttackStrategy>() {
             strategyShootClosestPlanet,
             strategyShootPlayerPlanet,
             strategyShootRandom

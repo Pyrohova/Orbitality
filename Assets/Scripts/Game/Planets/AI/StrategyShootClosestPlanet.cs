@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrategyShootClosestPlanet : MonoBehaviour, IEnemyPlanetAI
+public class StrategyShootClosestPlanet : MonoBehaviour, IEnemyPlanetAttackStrategy
 {
     private SolarSystemManager solarSystemManager;
 

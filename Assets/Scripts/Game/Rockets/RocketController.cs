@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Controls rocket's movement and collision with other objects.
+/// </summary>
 public class RocketController : MonoBehaviour, IHittable
 {
     [SerializeField] private float speed;

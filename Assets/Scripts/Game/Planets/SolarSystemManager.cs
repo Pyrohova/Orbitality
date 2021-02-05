@@ -3,6 +3,9 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Manages generating planets and controls alive planets quantity.
+/// </summary>
 public class SolarSystemManager : MonoBehaviour
 {
     [SerializeField] private PlanetFactory planetFactory;

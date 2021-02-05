@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StrategyShootRandom : MonoBehaviour, IEnemyPlanetAI
+public class StrategyShootRandom : MonoBehaviour, IEnemyPlanetAttackStrategy
 {
     public Vector2 GetDirection(Transform selectedPlanet)
     {

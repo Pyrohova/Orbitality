@@ -75,6 +75,7 @@ public class GameUIManager : MonoBehaviour
         StartCoroutine(UpdateCooldown(cooldown));
     }
 
+    //changes cooldown slider value during required time
     private IEnumerator UpdateCooldown(float cooldown)
     {
         float currentCooldown = cooldown;
@@ -88,20 +89,30 @@ public class GameUIManager : MonoBehaviour
 
     private void Start()
     {
+        //set start values
         hpSlider.value = 1;
         cooldownSlider.value = 0;
-
-        var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
-        var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
-        var rocketPool = ServiceLocator.GetInstance().GetRocketManager();
 
         inGameScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         pauseScreen.SetActive(false);
 
+        // show player's HUD
+        ShowInGameScreen();
+
+        var solarSystemManager = ServiceLocator.GetInstance().GetSolarSystemManager();
+        var gameStateController = ServiceLocator.GetInstance().GetGameStateController();
+        var rocketPool = ServiceLocator.GetInstance().GetRocketManager();
+        var playerPlanet = solarSystemManager.GetPlayerPlanet().GetComponent<PlanetController>();
+
+        //subscribe on events
+        playerPlanet.OnHealthChanged += UpdatePlayerHealthBarValue;
+        playerPlanet.OnCooldownStarted += UpdatePlayerCooldownBarValue;
+
         solarSystemManager.OnAllEnemiesDestroyed += (result) => { ShowGameOverScreen(result); };
         solarSystemManager.OnPlayerDestroyed += (result) => { ShowGameOverScreen(result); };
 
+        //set callbacks on buttons
         pauseButton.onClick.AddListener(() => {
             ShowPauseScreen();
             gameStateController.Pause();
@@ -125,12 +136,6 @@ public class GameUIManager : MonoBehaviour
             solarSystemManager.ResetWorld();
             rocketPool.Reset();
         });
-
-        ShowInGameScreen();
-
-        var playerPlanet = solarSystemManager.GetPlayerPlanet().GetComponent<PlanetController>();
-        playerPlanet.OnHealthChanged += UpdatePlayerHealthBarValue;
-        playerPlanet.OnCooldownStarted += UpdatePlayerCooldownBarValue;
 
     }
 }

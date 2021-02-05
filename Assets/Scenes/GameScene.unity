@@ -495,7 +495,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 854751386}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -574,7 +574,7 @@ GameObject:
   - component: {fileID: 978042951}
   - component: {fileID: 978042952}
   - component: {fileID: 978042953}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Sun
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -683,7 +683,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1124700190}
   - component: {fileID: 1124700191}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: starsBig
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -846,7 +846,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1292777669}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Planets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -920,7 +920,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1390322522}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Rockets
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -963,7 +963,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1649400867}
   - component: {fileID: 1649400868}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Nebula Blue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1044,7 +1044,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1807857224}
   - component: {fileID: 1807857225}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: starsSmall
   m_TagString: Untagged
   m_Icon: {fileID: 0}

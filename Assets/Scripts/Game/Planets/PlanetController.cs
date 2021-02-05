@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Controls planet's movement and hp, calls events on changing hp or cooldown values.
+/// </summary>
 public class PlanetController : MonoBehaviour, IHittable
 {
     [SerializeField] private Slider hpSlider;
@@ -21,6 +24,7 @@ public class PlanetController : MonoBehaviour, IHittable
     public Action<float> OnHealthChanged;
     public Action<float> OnCooldownStarted;
 
+    //part that controls current planet attack on other planets
     private PlanetAttackController planetAttackController;
 
     public void UpdateCooldown(float cooldown)

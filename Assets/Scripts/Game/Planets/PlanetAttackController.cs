@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Allows current planet to attack other planets.
+/// </summary>
 public abstract class PlanetAttackController : MonoBehaviour
 {
     protected RocketManager rocketManager;
@@ -25,7 +28,7 @@ public abstract class PlanetAttackController : MonoBehaviour
         this.readyToAttackIcon = readyToAttackIcon;
     }
 
-    protected abstract IEnumerator DisableShootUntillCooldownEnds();
+    protected abstract IEnumerator ReloadShooting();
 
     public abstract void Shoot(Vector2 dir);
 }
